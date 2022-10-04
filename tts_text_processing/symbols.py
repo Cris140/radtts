@@ -50,7 +50,14 @@ def get_symbols(symbol_set):
         _accented = 'áçéêëñöøćž'
         _numbers = '0123456789'
         _letters = 'áàãâéèêíìîóòõôúùûçÁÀÃÂÉÈÊÍÌÎÓÒÕÔÚÙÛÇabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        _arpabet = ["@" + s for s in arpabet]
+        symbols = list(_punctuation + _math + _special + _accented + _numbers + _letters)
+    elif symbol_set == 'ipa':
+        _punctuation = '!\'",.:;? '
+        _math = '#%&*+-/[]()'
+        _special = '_@©°½—₩€$'
+        _accented = 'áçéêëñöøćž'
+        _numbers = '0123456789'
+        _letters = 'ɑɐɒæɓʙβɔɕçɗɖðʤəɘɚɛɜɝɞɟʄɡɠɢʛɦɧħɥʜɨɪʝɭɬɫɮʟɱɯɰŋɳɲɴøɵɸθœɶʘɹɺɾɻʀʁɽʂʃʈʧʉʊʋⱱʌɣɤʍχʎʏʑʐʒʔʡʕʢǀǁǂǃˈˌːˑʼʴʰʱʲʷˠˤ˞↓↑→↗↘'̩'ᵻ'
         symbols = list(_punctuation + _math + _special + _accented + _numbers + _letters)
     elif symbol_set == 'radtts':
         _punctuation = '!\'",.:;? '
