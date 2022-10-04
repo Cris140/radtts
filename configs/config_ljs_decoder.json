@@ -68,7 +68,7 @@
         "use_energy_avg": true,
         "use_scaled_energy": true,
         "symbol_set": "ipa",
-        "cleaner_names": ["portuguese_phonemizer_cleaners"],
+        "cleaner_names": ["portuguese_cleaners_phonemizer"],
         "heteronyms_path": "tts_text_processing/heteronyms",
         "phoneme_dict_path": "tts_text_processing/cmudict-0.7b",
         "p_phoneme": 0.0,
