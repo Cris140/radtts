@@ -21,13 +21,27 @@ from .acronyms import AcronymNormalizer
 from .datestime import normalize_datestime
 from .letters_and_numbers import normalize_letters_and_numbers
 from .abbreviations import normalize_abbreviations
+from phonemizer.punctuation import Punctuation
+from phonemizer.backend import EspeakBackend
+from phonemizer.separator import Separator, default_separator
+from phonemizer import phonemize
 
+
+#phonemizer backend for PT-BR text
+backendptbr = EspeakBackend('pt-br',
+    preserve_punctuation=True,
+    punctuation_marks=Punctuation.default_marks(),
+    with_stress=True,
+    )
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r'\s+')
 
 # Regular expression separating words enclosed in curly braces for cleaning
 _arpa_re = re.compile(r'{[^}]+}|\S+')
+
+def stringtolist(text):
+      return [text]
 
 def expand_abbreviations(text):
     return normalize_abbreviations(text)
@@ -70,6 +84,12 @@ def dehyphenize_compound_words(text):
     text = re.sub(r'(?<=[a-zA-Z0-9])-(?=[a-zA-Z])', ' ', text)
     return text
 
+# Convert list into string 
+def listToString(text):  
+    str1 = ""      
+    for ele in text: 
+        str1 += ele  
+    return str1 
 
 def remove_space_before_punctuation(text):
     return re.sub(r"\s([{}](?:\s|$))".format(punctuation), r'\1', text)
@@ -95,10 +115,12 @@ class Cleaner(object):
         text = remove_space_before_punctuation(text)
         return text
 
-
     def get_cleaner_fns(self, cleaner_name):
         if cleaner_name == 'basic_cleaners':
             sequence_fns = [lowercase, collapse_whitespace]
+            word_fns = []
+        elif cleaner_name == 'portuguese_cleaners_phonemizer':
+            sequence_fns = [lowercase, collapse_whitespace, stringtolist, backendptbr.phonemize, listToString]          
             word_fns = []
         elif cleaner_name == 'english_cleaners':
             sequence_fns = [collapse_whitespace, convert_to_ascii, lowercase]
